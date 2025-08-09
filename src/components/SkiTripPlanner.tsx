@@ -88,9 +88,22 @@ export default function SkiTripPlanner({ group }: Readonly<SkiTripPlannerProps>)
     }
   }, [selectedDestination, checkinDate, checkoutDate]);
 
-  const handleVote = async (destinationId: string, hotelId: string, participantId: string) => {
+  const handleVote = async (
+    destinationId: string,
+    destinationName: string,
+    hotelId: string,
+    hotelName: string,
+    participantId: string
+  ) => {
     try {
-      const result = await submitVote(participantId, group.id, destinationId, hotelId);
+      const result = await submitVote(
+        participantId,
+        group.id,
+        destinationId,
+        destinationName,
+        hotelId,
+        hotelName
+      );
 
       if (result.success) {
         await refreshGroup();

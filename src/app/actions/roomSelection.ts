@@ -35,7 +35,6 @@ interface RoomSelectionData {
 export async function saveRoomSelection(selectionData: RoomSelectionData) {
   try {
     const supabase = await createClient();
-    console.log('saveRoomSelection called with data:', selectionData);
 
     // First, try to delete any existing selection for this participant/group/hotel combination
     // This allows them to change their room selection at the same hotel

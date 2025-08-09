@@ -2,6 +2,10 @@
 
 A collaborative web application for planning ski trips with friends. Built with Next.js 15, TypeScript, and Tailwind CSS.
 
+## Live Demo
+
+Demo available at https://test1-psi-lilac.vercel.app/
+
 ## 🚀 Tech Stack
 
 - **Frontend**: Next.js 15 with App Router, TypeScript, React 19
@@ -68,7 +72,7 @@ A collaborative web application for planning ski trips with friends. Built with 
 
 ## 🏗️ Architecture Decisions
 
-### **Database Choice: Postgres (Supabase) **
+### Database Choice: Postgres (Supabase)
 
 - ✅ **Pros**: Powerful & flexible
 
@@ -103,7 +107,7 @@ Ready for deployment on:
 npm run build  # Test production build
 ```
 
-## If We Shipped Next Week, I'd Focus On...
+## If We Shipped Next Week, I'd Focus On
 
 - Go through the requirements, check the app matches them correctly - perhaps discuss with te product owner if some adjustments need making to the app, or whether changes to the requirements would be beneficial
 - There is no interaction between users so the app is missing a vital component

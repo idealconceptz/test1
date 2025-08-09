@@ -4,44 +4,6 @@ import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase-server';
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-async function fetchDestinationName(destinationId: string): Promise<string> {
-  try {
-    const destinationsResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/destinations`
-    );
-    const destinationsData = await destinationsResponse.json();
-
-    if (destinationsData.success && destinationsData.data) {
-      const destination = destinationsData.data.find(
-        (d: { id: string; name: string }) => d.id === destinationId
-      );
-      return destination?.name || 'Unknown Destination';
-    }
-  } catch (error) {
-    console.error('Failed to fetch destination name:', error);
-  }
-  return 'Unknown Destination';
-}
-
-async function fetchHotelName(destinationId: string, hotelId: string): Promise<string | null> {
-  if (!hotelId) return null;
-
-  try {
-    const hotelsResponse = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/hotels?destinationId=${destinationId}`
-    );
-    const hotelsData = await hotelsResponse.json();
-
-    if (hotelsData.success && hotelsData.data) {
-      const hotel = hotelsData.data.find((h: { id: string; name: string }) => h.id === hotelId);
-      return hotel?.name || null;
-    }
-  } catch (error) {
-    console.error('Failed to fetch hotel name:', error);
-  }
-  return null;
-}
-
 async function checkExistingVote(
   supabase: SupabaseClient,
   participantId: string,
@@ -68,8 +30,10 @@ async function upsertVote(
   destinationId: string,
   destinationName: string,
   hotelId: string,
-  hotelName: string | null
+  hotelName: string
 ): Promise<void> {
+  console.log('upsert', participantId, groupId, destinationId, destinationName, hotelId, hotelName);
+
   const { error: voteError } = await supabase.from('trip_votes').upsert(
     {
       participant_id: participantId,
@@ -109,16 +73,16 @@ export async function submitVote(
   participantId: string,
   groupId: string,
   destinationId: string,
-  hotelId: string
+  destinationName: string,
+  hotelId: string,
+  hotelName: string
 ) {
   try {
+    console.log(participantId, groupId, destinationId, destinationName, hotelId, hotelName);
+
     const supabase = await createClient();
 
-    const [destinationName, hotelName, hasExistingVote] = await Promise.all([
-      fetchDestinationName(destinationId),
-      fetchHotelName(destinationId, hotelId),
-      checkExistingVote(supabase, participantId, groupId),
-    ]);
+    const hasExistingVote = await checkExistingVote(supabase, participantId, groupId);
 
     await upsertVote(
       supabase,

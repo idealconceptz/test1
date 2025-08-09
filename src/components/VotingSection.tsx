@@ -4,7 +4,13 @@ interface VotingSectionProps {
   readonly selectedDestination: SkiDestination;
   readonly selectedHotel: Hotel;
   readonly participants: Participant[];
-  readonly onVote: (destinationId: string, hotelId: string, participantId: string) => void;
+  readonly onVote: (
+    destinationId: string,
+    destinationName: string,
+    hotelId: string,
+    hotelName: string,
+    participantId: string
+  ) => void;
 }
 
 export default function VotingSection({
@@ -29,7 +35,15 @@ export default function VotingSection({
           {participants.map(participant => (
             <button
               key={participant.id}
-              onClick={() => onVote(selectedDestination.id, selectedHotel.id, participant.id)}
+              onClick={() =>
+                onVote(
+                  selectedDestination.id,
+                  selectedDestination.name,
+                  selectedHotel.id,
+                  selectedHotel.name,
+                  participant.id
+                )
+              }
               className={`p-3 rounded-lg border text-left transition-colors ${
                 participant.hasVoted
                   ? 'bg-green-50 border-green-200 text-green-800'

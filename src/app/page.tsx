@@ -13,7 +13,6 @@ export default function Home() {
   const SAMPLE_GROUP_ID = '550e8400-e29b-41d4-a716-446655440000';
 
   useEffect(() => {
-    // Load the group from the database
     const loadGroup = async () => {
       try {
         const result = await getFullGroupData(SAMPLE_GROUP_ID);

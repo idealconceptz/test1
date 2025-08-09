@@ -77,7 +77,15 @@ export default function HotelDetailsModal({
       setVoteStatus({ type: null, message: '' });
 
       try {
-        const result = await submitVote(selectedUser.id, groupId, destinationId, hotel.id);
+        console.log(selectedUser.id, groupId, destinationId, destinationName, hotel.id, hotel.name);
+        const result = await submitVote(
+          selectedUser.id,
+          groupId,
+          destinationId,
+          destinationName,
+          hotel.id,
+          hotel.name
+        );
 
         if (result.success) {
           setVoteStatus({
