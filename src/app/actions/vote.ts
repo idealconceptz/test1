@@ -120,8 +120,13 @@ export async function getVoteResults(groupId: string) {
       .select(
         `
         id,
+        participant_id,
+        group_id,
         destination_id,
+        destination_name,
         hotel_id,
+        hotel_name,
+        created_at,
         trip_participants!inner(name, avatar)
       `
       )

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { getVoteResults } from '@/app/actions/vote';
 
 interface VotingResultsProps {
   readonly groupId: string;
@@ -15,6 +16,10 @@ interface RawVote {
   hotel_id: string | null;
   hotel_name: string | null;
   created_at: string;
+  trip_participants: {
+    name: string;
+    avatar?: string;
+  }[];
 }
 
 interface VoteResult {
@@ -23,7 +28,10 @@ interface VoteResult {
   hotelId: string | null;
   hotelName: string | null;
   count: number;
-  participants: string[];
+  participants: Array<{
+    id: string;
+    name: string;
+  }>;
 }
 
 export default function VotingResults({ groupId }: Readonly<VotingResultsProps>) {
@@ -33,14 +41,13 @@ export default function VotingResults({ groupId }: Readonly<VotingResultsProps>)
   useEffect(() => {
     const fetchVotingResults = async () => {
       try {
-        const response = await fetch(`/api/votes?groupId=${groupId}`);
-        const data = await response.json();
+        const result = await getVoteResults(groupId);
 
-        if (data.success && Array.isArray(data.data)) {
+        if (result.success && Array.isArray(result.data)) {
           // Group votes by destination+hotel combination
           const groupedVotes: Record<string, VoteResult> = {};
 
-          data.data.forEach((vote: RawVote) => {
+          result.data.forEach((vote: RawVote) => {
             const key = `${vote.destination_id}:${vote.hotel_id || 'no-hotel'}`;
             if (!groupedVotes[key]) {
               groupedVotes[key] = {
@@ -53,7 +60,10 @@ export default function VotingResults({ groupId }: Readonly<VotingResultsProps>)
               };
             }
             groupedVotes[key].count++;
-            groupedVotes[key].participants.push(vote.participant_id);
+            groupedVotes[key].participants.push({
+              id: vote.participant_id,
+              name: vote.trip_participants[0]?.name || 'Unknown',
+            });
           });
 
           // Convert to array and sort by count (descending)
@@ -61,7 +71,7 @@ export default function VotingResults({ groupId }: Readonly<VotingResultsProps>)
           sortedResults.sort((a, b) => b.count - a.count);
           setVotingResults(sortedResults);
         } else {
-          console.error('Invalid response format:', data);
+          console.error('Invalid response format:', result);
           setVotingResults([]);
         }
       } catch (error) {
@@ -135,12 +145,12 @@ export default function VotingResults({ groupId }: Readonly<VotingResultsProps>)
                   <div className="mt-2">
                     <p className="text-xs text-gray-500 mb-1">Voted by:</p>
                     <div className="flex flex-wrap gap-1">
-                      {result.participants.map((participantId, idx) => (
+                      {result.participants.map(participant => (
                         <span
-                          key={participantId}
+                          key={participant.id}
                           className="inline-block px-2 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs"
                         >
-                          Participant {idx + 1}
+                          {participant.name}
                         </span>
                       ))}
                     </div>
