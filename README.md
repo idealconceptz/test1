@@ -1,4 +1,4 @@
-# 🎿 Ski Trip Planner
+# Ski Trip Planner
 
 A collaborative web application for planning ski trips with friends. Built with Next.js 15, TypeScript, and Tailwind CSS.
 
@@ -6,7 +6,7 @@ A collaborative web application for planning ski trips with friends. Built with 
 
 Demo available at https://test1-psi-lilac.vercel.app/
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Frontend**: Next.js 15 with App Router, TypeScript, React 19
 - **Styling**: Tailwind CSS 4 for responsive design
@@ -15,7 +15,7 @@ Demo available at https://test1-psi-lilac.vercel.app/
 - **API Integration**: liteAPI for real hotel data with graceful fallback to mock data
 - **Development**: Turbopack for fast development builds, ESLint for code quality
 
-## 🏃‍♂️ Getting Started
+## Getting Started
 
 1. **Clone and install dependencies:**
 
@@ -47,7 +47,7 @@ Demo available at https://test1-psi-lilac.vercel.app/
 
 4. **Open [http://localhost:3000](http://localhost:3000)** to start planning your ski trip!
 
-## 🔧 Development Setup
+## Development Setup
 
 **VS Code Configuration:**
 
@@ -61,7 +61,7 @@ Demo available at https://test1-psi-lilac.vercel.app/
 - **ESLint**: TypeScript and React best practices enforcement
 - **TypeScript**: Full type safety with strict configuration
 
-## 🛠️ Available Scripts
+## Available Scripts
 
 - `npm run dev` - Start development server with Turbopack
 - `npm run build` - Build for production
@@ -70,31 +70,31 @@ Demo available at https://test1-psi-lilac.vercel.app/
 - `npm run format` - Format all files with Prettier
 - `npm run format:check` - Check if files are formatted correctly
 
-## 🏗️ Architecture Decisions
+## Architecture Decisions
 
 ### Database Choice: Postgres (Supabase)
 
-- ✅ **Pros**: Powerful & flexible
+- **Pros**: Powerful & flexible
 
 ### **API Strategy: Graceful Degradation**
 
-- ✅ **liteAPI Integration**: Real hotel data when available
-- ✅ **Mock Data Fallback**: Always functional even without API keys
-- 🔄 **Next Steps**: Add caching layer, more destination APIs
+- **liteAPI Integration**: Real hotel data when available
+- **Mock Data Fallback**: Always functional even without API keys
+- **Next Steps**: Add caching layer, more destination APIs
 
 ### **State Management: React + localStorage**
 
-- ✅ **Simple & Effective**: No additional complexity for MVP
-- ⚠️ **Trade-offs**: No optimistic updates, manual refresh needed
-- 🔄 **Next Steps**: Add Jotai/Zustand for complex state if needed
+- **Simple & Effective**: No additional complexity for MVP
+- **Trade-offs**: No optimistic updates, manual refresh needed
+- **Next Steps**: Add Jotai/Zustand for complex state if needed
 
 ### **Styling: Tailwind CSS**
 
-- ✅ **Rapid Development**: Quick iteration on designs
-- ✅ **Responsive**: Mobile-first approach
-- 🔄 **Next Steps**: Custom component library, design system
+- **Rapid Development**: Quick iteration on designs
+- **Responsive**: Mobile-first approach
+- **Next Steps**: Custom component library, design system
 
-## 🚀 Deployment
+## Deployment
 
 Ready for deployment on:
 
@@ -129,7 +129,7 @@ On a technical level:
 - Define a theme with CSS/SCSS classes to provide consistency of the UI
 - Slight refactor - look for redundancies and overcomplication
 - Security could always be better - not essential for an MVP, but I'd look at upgrading LitAPI's intercation to Enhanced security using HMAC signatures with public and private key pairs.
-- Define the data fetchin gand caching strategy for the app
+- Define the data fetching and caching strategy for the app
 
 ## Collaboration with Non-Technical Founders
 
@@ -142,4 +142,4 @@ My approach to working with non-technical founders:
 - Happy to discuss technical issues in no-tech speak
 - Flexible remote working where suitable - face-to-face communication regularly
 - At this stage it's MVP/Prototype, so keep it quick and be prepared to throw stuff out.
-- Be ready to switch libraries/frameworks if there is a clear advantage or current tech is providing obstructions
+- Be prepared to switch libraries/frameworks if there is a clear advantage or current tech is providing obstructions
