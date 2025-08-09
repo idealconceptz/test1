@@ -21,12 +21,80 @@ export interface Hotel {
   thumbnail?: string;
 }
 
+export interface HotelDetails {
+  id: string;
+  name: string;
+  description?: string;
+  hotelDescription?: string;
+  images?: Array<{ url: string; description?: string }>;
+  hotelImages?: Array<{
+    url: string;
+    urlHd: string;
+    caption: string;
+    order: number;
+    defaultImage: boolean;
+  }>;
+  photos?: Array<{
+    url: string;
+    imageDescription: string;
+    imageClass1: string;
+    imageClass2: string;
+    failoverPhoto: string;
+    mainPhoto: boolean;
+    score: number;
+    classId: number;
+    classOrder: number;
+    hd_url: string;
+  }>;
+  roomAmenities?: Array<{ amenitiesId: number; name: string }>;
+  facilities?: Array<{ facilityId: number; name: string; description?: string }>;
+  rooms?: Room[];
+  address?: {
+    line1?: string;
+    line2?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postal_code?: string;
+  };
+  contact?: {
+    phone?: string;
+    email?: string;
+    website?: string;
+  };
+  star_rating?: number;
+  latitude?: number;
+  longitude?: number;
+}
+
+export interface HotelImage {
+  url: string;
+  urlHd: string;
+  caption: string;
+  order: number;
+  defaultImage: boolean;
+}
+
 export interface Room {
   id: string;
-  type: string;
-  capacity: number;
-  pricePerNight: number;
-  available: boolean;
+  roomName: string;
+  description?: string;
+  maxAdults?: number;
+  maxChildren?: number;
+  maxOccupancy?: number;
+  roomSizeSquare?: number;
+  roomSizeUnit?: string;
+  bedTypes?: Array<{
+    quantity: number;
+    bedType: string;
+    bedSize: string;
+    id: number;
+  }>;
+  roomAmenities?: Array<{
+    amenitiesId: number;
+    name: string;
+    sort: number;
+  }>;
 }
 
 export interface Participant {

@@ -7,18 +7,20 @@ import { getDestinations } from '@/services/destinations';
 import { getHotels } from '@/services/hotels';
 import { getFullGroupData } from '@/app/actions/group';
 import { submitVote } from '@/app/actions/vote';
+import { useUserSelection } from '@/hooks/useUserSelection';
 import DestinationCard from './DestinationCard';
 import HotelList from './HotelList';
 import VotingSection from './VotingSection';
 import VotingResults from './VotingResults';
 import ParticipantsList from './ParticipantsList';
+import UserSelection from './UserSelection';
 
 interface SkiTripPlannerProps {
   readonly group: Group;
   readonly onResetGroup: () => void;
 }
 
-export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTripPlannerProps>) {
+export default function SkiTripPlanner({ group }: Readonly<SkiTripPlannerProps>) {
   const [destinations, setDestinations] = useState<SkiDestination[]>([]);
   const [destinationsLoading, setDestinationsLoading] = useState(true);
   const [selectedDestination, setSelectedDestination] = useState<SkiDestination | null>(null);
@@ -26,12 +28,10 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
   const [selectedHotel, setSelectedHotel] = useState<Hotel | null>(null);
   const [currentGroup, setCurrentGroup] = useState<Group>(group);
   const [loading, setLoading] = useState(false);
+  const { selectedUser, selectUser } = useUserSelection(currentGroup.participants);
+  const [checkinDate] = useState<string>('');
+  const [checkoutDate] = useState<string>('');
 
-  // Date selection state
-  const [checkinDate, setCheckinDate] = useState<string>('');
-  const [checkoutDate, setCheckoutDate] = useState<string>('');
-
-  // Load destinations on mount
   useEffect(() => {
     const loadDestinations = async () => {
       setDestinationsLoading(true);
@@ -40,7 +40,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
         setDestinations(dests);
       } catch (error) {
         console.error('Failed to load destinations:', error);
-        // Fallback to mock data
         setDestinations(mockDestinations);
       } finally {
         setDestinationsLoading(false);
@@ -50,7 +49,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
     loadDestinations();
   }, []);
 
-  // Refresh group data when votes change
   const refreshGroup = async () => {
     try {
       const result = await getFullGroupData(group.id);
@@ -62,25 +60,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
     }
   };
 
-  // Load group data on mount
-  useEffect(() => {
-    const loadGroupData = async () => {
-      try {
-        const result = await getFullGroupData(group.id);
-        if (result.success && result.data) {
-          setCurrentGroup(result.data);
-        }
-      } catch (error) {
-        console.error('Failed to load group data:', error);
-        // Fallback to the passed group prop
-        setCurrentGroup(group);
-      }
-    };
-
-    loadGroupData();
-  }, [group.id, group]);
-
-  // Load hotels when destination is selected or dates change
   useEffect(() => {
     if (selectedDestination) {
       const loadHotels = async () => {
@@ -90,7 +69,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
             destinationId: selectedDestination.id,
           };
 
-          // Include dates if both are provided
           if (checkinDate && checkoutDate) {
             hotelParams.checkin = checkinDate;
             hotelParams.checkout = checkoutDate;
@@ -100,7 +78,7 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
           setHotels(hotelData);
         } catch (error) {
           console.error('Failed to load hotels:', error);
-          setHotels([]); // Clear hotels on error
+          setHotels([]);
         } finally {
           setLoading(false);
         }
@@ -126,24 +104,21 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
 
   return (
     <div className="container mx-auto px-4 py-8">
-      {/* Header */}
+      <UserSelection
+        participants={currentGroup.participants}
+        onUserSelect={selectUser}
+        selectedUser={selectedUser}
+      />
+
       <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">🎿 {currentGroup.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-900">{currentGroup.name}</h1>
           <p className="text-gray-600 mt-1">Plan your perfect ski adventure together</p>
         </div>
-        <button
-          onClick={onResetGroup}
-          className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          Start Over
-        </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Destinations & Hotels */}
         <div className="lg:col-span-2 space-y-8">
-          {/* Destinations */}
           <section>
             <h2 className="text-2xl font-semibold text-gray-900 mb-6">Choose Your Destination</h2>
             {destinationsLoading ? (
@@ -168,7 +143,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
             )}
           </section>
 
-          {/* Hotels */}
           {selectedDestination && (
             <HotelList
               hotels={hotels}
@@ -176,13 +150,13 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
               onSelectHotel={setSelectedHotel}
               loading={loading}
               destinationName={selectedDestination.name}
-              participants={currentGroup.participants}
+              participants={selectedUser ? [selectedUser] : []}
               groupId={currentGroup.id}
               destinationId={selectedDestination.id}
+              selectedUser={selectedUser}
             />
           )}
 
-          {/* Voting Section */}
           {selectedDestination && selectedHotel && (
             <VotingSection
               selectedDestination={selectedDestination}
@@ -193,7 +167,6 @@ export default function SkiTripPlanner({ group, onResetGroup }: Readonly<SkiTrip
           )}
         </div>
 
-        {/* Right Column - Participants & Results */}
         <div className="space-y-8">
           <ParticipantsList participants={currentGroup.participants} />
           <VotingResults groupId={currentGroup.id} />

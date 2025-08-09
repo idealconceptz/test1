@@ -12,16 +12,18 @@ interface HotelListProps {
   readonly participants: Participant[];
   readonly groupId: string;
   readonly destinationId: string;
+  readonly selectedUser: Participant | null;
 }
 export default function HotelList({
   hotels,
   selectedHotel,
-  onSelectHotel,
+
   loading,
   destinationName,
   participants,
   groupId,
   destinationId,
+  selectedUser,
 }: Readonly<HotelListProps>) {
   const [modalHotel, setModalHotel] = useState<Hotel | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -113,6 +115,7 @@ export default function HotelList({
         participants={participants}
         groupId={groupId}
         destinationId={destinationId}
+        selectedUser={selectedUser}
       />
     </section>
   );

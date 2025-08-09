@@ -1,13 +1,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
-
-interface HotelImage {
-  url: string;
-  urlHd: string;
-  caption: string;
-  order: number;
-  defaultImage: boolean;
-}
+import { HotelImage } from '../types';
 
 interface ImageCarouselProps {
   readonly hotelImages: HotelImage[];

@@ -6,7 +6,6 @@ type ParticipantRow = Database['public']['Tables']['trip_participants']['Row'];
 type VoteRow = Database['public']['Tables']['trip_votes']['Row'];
 type TripSelectionRow = Database['public']['Tables']['trip_selections']['Row'];
 
-// Group operations
 export async function createGroup(
   name: string
 ): Promise<{ success: boolean; data?: GroupRow; error?: string }> {
@@ -49,7 +48,6 @@ export async function getGroup(
   }
 }
 
-// Participant operations
 export async function addParticipant(
   groupId: string,
   name: string,
@@ -180,7 +178,6 @@ export async function getVotes(
       .select('*')
       .eq('group_id', groupId)
       .order('created_at', { ascending: true });
-    // console.log('Fetched votes:', data);
     if (error) {
       return { success: false, error: error.message };
     }
@@ -194,7 +191,6 @@ export async function getVotes(
   }
 }
 
-// Trip selection operations
 export async function saveTripSelection(
   groupId: string,
   destinationId: string,

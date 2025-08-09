@@ -13,14 +13,9 @@ This project now includes Supabase integration for persistent data storage.
 The following environment variables are already configured in `.env.local`:
 
 ```
-# Supabase Configuration
-SUPABASE_URL=https://ndcwzvnwpzwzlmzfiosk.supabase.co
-SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-SECRET_SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
-
 # Public Supabase Configuration (accessible in browser)
-NEXT_PUBLIC_SUPABASE_URL=https://ndcwzvnwpzwzlmzfiosk.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
 ```
 
 ## Database Setup

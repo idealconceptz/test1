@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { SkiDestination } from '@/types';
 
 interface DestinationCardProps {
@@ -23,17 +24,17 @@ export default function DestinationCard({
       }`}
     >
       <div className="relative h-48 bg-gray-200">
-        <img
+        <Image
           src={destination.imageUrl}
           alt={destination.name}
-          className="w-full h-full object-cover"
-          onError={e => {
-            // Fallback to placeholder on error
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          placeholder="blur"
+          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+          onError={() => {
             console.error('Image failed to load:', destination.imageUrl);
-            const target = e.target as HTMLImageElement;
-            target.src = `https://via.placeholder.com/400x300/e5e7eb/6b7280?text=${encodeURIComponent(destination.name)}`;
           }}
-          onLoad={() => {}}
         />
       </div>
 
