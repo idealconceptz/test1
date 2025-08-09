@@ -109,7 +109,7 @@ npm run build  # Test production build
 
 ## If We Shipped Next Week, I'd Focus On
 
-- Go through the requirements, check the app matches them correctly - perhaps discuss with te product owner if some adjustments need making to the app, or whether changes to the requirements would be beneficial
+- Go through the requirements, check the app matches them correctly - perhaps discuss with the founder if some adjustments need making to the app, or whether changes to the requirements would be beneficial
 - There is no interaction between users so the app is missing a vital component
 - The trip group needs to be set up by someone, and users added/invited
 - Date selection for trip planning - there is no checkin/checkout date set or defined. The group owner should be able to define and change if necessary, then accurate pricing per night could be gathered from the API
