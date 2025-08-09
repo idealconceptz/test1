@@ -1,0 +1,14 @@
+# Prettier ignore file
+node_modules/
+.next/
+dist/
+build/
+*.min.js
+*.min.css
+coverage/
+.vercel/
+.env*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+scripts/

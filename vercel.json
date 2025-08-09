@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "name": "ski-trip-planner",
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/"
+    }
+  ]
+}
