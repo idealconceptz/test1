@@ -9,7 +9,7 @@ const CACHE_DURATION = 30 * 60 * 1000; // 30 minutes
 export async function getDestinations(): Promise<SkiDestination[]> {
   // Check cache first
   if (destinationsCache && Date.now() < cacheExpiry) {
-    console.log('📦 Using cached destinations');
+    console.log('Using cached destinations');
     return destinationsCache;
   }
 

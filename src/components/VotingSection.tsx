@@ -26,9 +26,9 @@ export default function VotingSection({
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="font-semibold text-gray-900">
-              {selectedDestination.name} - {selectedHotel.name}
+              {selectedDestination?.name} - {selectedHotel?.name}
             </h3>
-            <p className="text-gray-600">${selectedHotel.pricePerNight}/night per room</p>
+            <p className="text-gray-600">${selectedHotel?.pricePerNight}/night per room</p>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">

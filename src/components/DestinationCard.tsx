@@ -45,7 +45,7 @@ export default function DestinationCard({
 
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-indigo-600">
-            ${destination.basePricePerPerson}
+            £{destination.basePricePerPerson}
           </span>
           <span className="text-sm text-gray-500">per person</span>
         </div>

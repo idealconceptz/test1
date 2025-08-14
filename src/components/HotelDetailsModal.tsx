@@ -162,7 +162,7 @@ export default function HotelDetailsModal({
                         : 'bg-gray-400 cursor-not-allowed'
                     }`}
                   >
-                    🗳️ I Vote For This Hotel!
+                    I Vote For This Hotel!
                   </button>
                 </div>
 
